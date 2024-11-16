@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Mission 2 Base de donnnée</title>
+        <link rel="stylesheet" type="text/css" href="assets/styles/style2.css" >
+    </head>
+    <body>
+        <header>
+            <h1 class="grand-titre">Mission 2</h1>
+            <nav class="menu">
+                <a href="index.html" class="boutton">Accueil</a>
+                <a href="mission1.html" class="boutton">Mission 1</a>
+                <a href="mission2.html" class="boutton">Mission 2</a>
+                <a href="mission3.html" class="boutton">Mission 3</a>
+            </nav>
+        </header>
+        <main>
+            <section>
+                <h1 class="titre">Contexte :</h1>
+                <p class="texte">Pour la mission 2, nous avons été chargés d'exploiter une base de donnée grâce à une interface
+                    de type "low code" appeler QBE (Querry by example), Cette mission vise à extraire des informations
+                    importantes à partir des données de KDou afin de préparer des analyses futures plus poussées. Cette mission
+                    se décompose en plusieurs étapes : 1. Étude de la base de données 2. Analyse des données via l’interface QBE
+                    et 3. Résolution de problèmes de données. Donc, cette mission a pour objectif d'introduire l’équipe à
+                    l’exploitation des données de KDou, en insistant sur l'importance de la qualité des données et en facilitant
+                    l’extraction de premiers indicateurs pertinents.</p>
+                <h1 class="titre">Indicateur :</h1>
+                <ul class="texte">
+                    <li class="indicateur">Indicateur 1 :</li>
+                    <ul>
+                        <li class="sous-titre">Énoncé :</li>
+                        <p>"Quels sont les produits d’Italie ou d’Allemagne vendus 50€ ou moins ? On veut les
+                            connaître noms et prix, nom du fournisseur, ville et pays d’origine."</p>
+                        <li class="sous-titre">Interpretation :</li>
+                        <p>Nous cherchons a obtenir les produit Italien et Allemand vendu a 50€ ou moins et il faut afficher le
+                            noms, le prix, le nom de fournisseur, ville et pays d'origine du produit.</p>
+                        <label for="resultat1">Resultat</label>
+                        <input type="checkbox" id="resultat1"/>
+                        <img src="assets/image/resultat1.png" alt="resultat d'une requête SQL" class="resultat1">
+                        <label for="SQL1">SQL</label>
+                        <input type="checkbox" id="SQL1"/>
+                        <ul class="code1">
+                            <li>SELECT Produit.NomProd, Produit.PrixUnit, Fournisseur.Societe, Fournisseur.Ville,
+                                Fournisseur.Pays
+                            </li>
+                            <li>FROM Fournisseur INNER JOIN Produit ON Fournisseur.NoFour = Produit.NoFour</li>
+                            <li>WHERE (((Produit.PrixUnit)<=50) AND ((Fournisseur.Pays)="Italie" Or
+                                (Fournisseur.Pays)="Allemagne"));
+                            </li>
+                        </ul>
+                    </ul>
+                    <li class="indicateur">Indicateur 2 :</li>
+                    <ul>
+                        <li class="sous-titre">Énoncé :</li>
+                        <p>"Combien y a-t-il de clients nantais ?"</p>
+                        <li class="sous-titre">Interpretation :</li>
+                        <p>Il faut que nous affichons le nombre totale de client Nantais.</p>
+                        <label for="resultat2">Resultat</label>
+                        <input type="checkbox" id="resultat2"/>
+                        <div class="resultat2">
+                            <table>
+                                <thead>
+                                <th>CompteDeSocieteCli</th>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>3</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <label for="SQL2">SQL</label>
+                        <input type="checkbox" id="SQL2"/>
+                        <ul class="code2">
+                            <li>SELECT Count(Client.SocieteCli) AS CompteDeSocieteCli</li>
+                            <li>FROM Client</li>
+                            <li>GROUP BY Client.VilleCli</li>
+                            <li>HAVING (((Client.VilleCli)="Nantes"));</li>
+                        </ul>
+                    </ul>
+                    <li class="indicateur">Indicateur 3 :</li>
+                    <ul>
+                        <li class="sous-titre">Énoncé :</li>
+                        <p>"Quels sont les produits conditionnés dans du carton ou dans du verre ?"</p>
+                        <li class="sous-titre">Interpretation :</li>
+                        <p>Il faut afficher les produit qui sont conditionnés avec du cartons et du verre.</p>
+                        <label for="resultat3">Resultat</label>
+                        <input type="checkbox" id="resultat3"/>
+                        <div class="resultat3">
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th>NomProd</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>Carnarvon Tigers</td>
+                                </tr>
+                                <tr>
+                                    <td>Chocolade</td>
+                                </tr>
+                                <tr>
+                                    <td>Fløtemysost</td>
+                                </tr>
+                                <tr>
+                                    <td>Gnocchi di nonna Alice</td>
+                                </tr>
+                                <tr>
+                                    <td>Gorgonzola Telino</td>
+                                </tr>
+                                <tr>
+                                    <td>Gravad lax</td>
+                                </tr>
+                                <tr>
+                                    <td>Gudbrandsdalsost</td>
+                                </tr>
+                                <tr>
+                                    <td>Gustaf's Knäckebröd</td>
+                                </tr>
+                                <tr>
+                                    <td>knäckebrod Kala</td>
+                                </tr>
+                                <tr>
+                                    <td>Longlife Tofu</td>
+                                </tr>
+                                <tr>
+                                    <td>Mascarpone Fabioli</td>
+                                </tr>
+                                <tr>
+                                    <td>Maxilaku</td>
+                                </tr>
+                                <tr>
+                                    <td>Mishi Kobe Niku</td>
+                                </tr>
+                                <tr>
+                                    <td>Mozzarella di Giovanni</td>
+                                </tr>
+                                <tr>
+                                    <td>Nord-Ost Matjeshering</td>
+                                </tr>
+                                <tr>
+                                    <td>NuNuCa Nuß-Nougat-Creme</td>
+                                </tr>
+                                <tr>
+                                    <td>Queso Cabrales</td>
+                                </tr>
+                                <tr>
+                                    <td>Queso Manchego La Pastora</td>
+                                </tr>
+                                <tr>
+                                    <td>Raclette Courdavault</td>
+                                </tr>
+                                <tr>
+                                    <td>Ravioli Angelo</td>
+                                </tr>
+                                <tr>
+                                    <td>Røgede sild</td>
+                                </tr>
+                                <tr>
+                                    <td>Singaporean Hokkien Fried Mee</td>
+                                </tr>
+                                <tr>
+                                    <td>Spegesild</td>
+                                </tr>
+                                <tr>
+                                    <td>Tofu</td>
+                                </tr>
+                                <tr>
+                                    <td>Tunnbröd</td>
+                                </tr>
+                                <tr>
+                                    <td>Uncle Bob's Organic Dried Pears</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <label for="SQL3">SQL</label>
+                        <input type="checkbox" id="SQL3"/>
+                        <ul class="code3">
+                            <li>SELECT Produit.NomProd</li>
+                            <li>FROM Produit</li>
+                            <li>WHERE (((Produit.QteParUnite) Like "*carton*" Or (Produit.QteParUnite) Like "*verre*"))</li>
+                            <li>ORDER BY Produit.NomProd;</li>
+                        </ul>
+                    </ul>
+                    <li class="indicateur">Indicateur 4 :</li>
+                    <ul>
+                        <li class="sous-titre">Énoncé :</li>
+                        <p>"Donner pour chaque fournisseur le nombre de produits qu'il propose en bouteille"</p>
+                        <li class="sous-titre">Interpretation :</li>
+                        <p>Il faut qu'on affiche le nombre de produits en bouteille pour chaque fournisseurs.</p>
+                        <label for="resultat4">Resultat</label>
+                        <input type="checkbox" id="resultat4"/>
+                        <img src="assets/images/resultat4.png" alt="resultat d'une requête SQL" class="resultat4">
+                        <label for="SQL4">SQL</label>
+                        <input type="checkbox" id="SQL4"/>
+                        <ul class="code4">
+                            <li>SELECT Fournisseur.Societe, Produit.QteParUnite, Produit.RefProd</li>
+                            <li>FROM Fournisseur INNER JOIN Produit ON Fournisseur.NoFour = Produit.NoFour</li>
+                            <li>GROUP BY Fournisseur.Societe, Produit.QteParUnite, Produit.RefProd</li>
+                            <li>HAVING (((Produit.QteParUnite) Like "*bouteille*"))</li>
+                            <li>ORDER BY Fournisseur.Societe;</li>
+                        </ul>
+                    </ul>
+                </ul>
+            </section>
+        </main>
+    </body>
+</html>

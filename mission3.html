@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Compte rendu mission 3</title>
+        <link rel="stylesheet" type="text/css" href="assets/styles/style3.css">
+    </head>
+    <body>
+        <nav>
+            <h1>KDou</h1>
+            <label for="toggle">☰</label>
+            <input type="checkbox" id="toggle">
+            <div class="menu">
+                <a href="index.html">Accueil</a>
+                <a href="mission1.html">Mission 1</a>
+                <a href="mission2.html">Mission 2</a>
+                <a href="mission3.html" class="active">Mission 3</a>
+                <a href="conclusion.html">Conclusion</a>
+            </div>
+        </nav>
+        <header>
+            <h1>Compte rendu de la mission 3</h1>
+            <p>Pour la mission 3, on nous a demandé d'analyser les données de KDou avec SQL pour produire des indicateurs pertinents.</p>
+        </header>
+        <main>
+            <section>
+                <h1>Les indicateurs sur les desserts et boissons</h1>
+                <article>
+                    <h2>Les desserts et boissons vendus 50€ ou plus avec leur pays d'origine:</h2>
+                    <p class="sql">
+                        &nbsp;&nbsp;SELECT P.RefProd, P.NomProd, P.PrixUnit, F.Pays
+                        <br>&nbsp;&nbsp;FROM Fournisseur AS F INNER JOIN Produit AS P ON F.NoFour = P.NoFour
+                        <br>&nbsp;&nbsp;WHERE P.PrixUnit >= 50 AND EXISTS (SELECT 1 FROM Categorie C WHERE C.CodeCateg = P.CodeCateg AND C.NomCateg IN("Desserts", "Boissons"))
+                        <br>&nbsp;&nbsp;ORDER BY P.NomProd, P.PrixUnit, F.Pays;
+                    </p>
+                    <table class="result">
+                        <thead>
+                            <tr>
+                                <th>RefProd</th>
+                                <th>NomProd</th>
+                                <th>PrixUnit</th>
+                                <th>Pays</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>129</td>
+                                <td>Jus Kiwina</td>
+                                <td>52,00€</td>
+                                <td>Royaume-Uni</td>
+                            </tr>
+                            <tr>
+                                <td>99</td>
+                                <td>Pimm's jojo</td>
+                                <td>53,83€</td>
+                                <td>Australia</td>
+                            </tr>
+                            <tr>
+                                <td>87</td>
+                                <td>Bratislava Vodka</td>
+                                <td>320,00€</td>
+                                <td>Royaume-Uni</td>
+                            </tr>
+                            <tr>
+                                <td>75</td>
+                                <td>Rhönbräu Klosterbier</td>
+                                <td>86,46€</td>
+                                <td>Allemagne</td>
+                            </tr>
+                            <tr>
+                                <td>38</td>
+                                <td>Côte de Blaye</td>
+                                <td>219,58€</td>
+                                <td>France</td>
+                            </tr>
+                            <tr>
+                                <td>35</td>
+                                <td>Steeleye Stout</td>
+                                <td>215,00€</td>
+                                <td>Etats-Unis</td>
+                            </tr>
+                            <tr>
+                                <td>20</td>
+                                <td>Sir Rodney's Marmalade</td>
+                                <td>67,50€</td>
+                                <td>Royaume-Uni</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Chang</td>
+                                <td>67,50€</td>
+                                <td>Royaume-Uni</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </article>
+                <article>
+                    <h2>Les pays de provenances des desserts et boissons :</h2>
+                    <p class="sql">
+                        &nbsp;&nbsp;SELECT DISTINCT (F.Pays)
+                        <br>&nbsp;&nbsp;FROM Fournisseur AS F, Categorie AS C
+                        <br>&nbsp;&nbsp;WHERE C.CodeCateg IN (SELECT CodeCateg FROM Categorie WHERE NomCateg IN("Desserts", "Boissons"))
+                        <br>&nbsp;&nbsp;ORDER BY F.Pays;
+                    </p>
+                    <p class="result">
+                        Allemagne, Australie, Brésil, Canada, Danemark, Espagne, Etats-Unis, Finlande, France, Italie, Japon, Norvège, Pays-Bas, Royaume-Uni, Singapour et Suède.
+                    </p>
+                </article>
+            </section>
+            <section>
+                <h1>Les indicateurs sur l'offre de KDou</h1>
+                <article>
+                    <h2>Le nombre de produits non commandés par catégorie:</h2>
+                    <p class="sql">
+                        &nbsp;&nbsp;SELECT C.NomCateg, COUNT(P.RefProd) AS ProdNonCom
+                        <br>&nbsp;&nbsp;FROM Categorie AS C INNER JOIN Produit AS P ON C.CodeCateg = P.CodeCateg
+                        <br>&nbsp;&nbsp;WHERE NOT EXISTS (SELECT * FROM DetailCommande D WHERE D.RefProd = P.RefProd)
+                        <br>&nbsp;&nbsp;GROUP BY C.NomCateg;
+                    </p>
+                    <ul class="result">
+                        <li>Boissons: 27 produits</li>
+                        <li>Condiments: 2 produits</li>
+                        <li>Desserts: 3 produits</li>
+                        <li>Pâtes et céréales: 2 produits</li>
+                        <li>Poissons et fruits de mer: 2 produits</li>
+                    </ul>
+                </article>
+                <article>
+                    <h2>Les pays ayant un nombre important de produits:</h2>
+                    <p class="sql">
+                        &nbsp;&nbsp;SELECT F.Pays, COUNT(P.RefProd) AS NbProd
+                        <br>&nbsp;&nbsp;FROM Fournisseur AS F INNER JOIN Produit AS P ON F.NoFour = P.NoFour
+                        <br>&nbsp;&nbsp;GROUP BY F.Pays
+                        <br>&nbsp;&nbsp;ORDER BY COUNT(P.RefProd) DESC;
+                    </p>
+                    <ul class="result">
+                        <li>Royaume-Uni: 18 produits</li>
+                        <li>Allemagne: 11 produits</li>
+                        <li>Brésil et Canada: 8 produits</li>
+                        <li>Etats-Unis: 7 produits</li>
+                        <li>France et Australie: 6 produits</li>
+                    </ul>
+                </article>
+            </section>
+            <section>
+                <h1>Les indicateurs sur les provenances des produits</h1>
+                <article>
+                    <h2>Les desserts ou boissons vendus à moins de 100€ en Allemagne:</h2>
+                    <p class="sql">
+                        &nbsp;&nbsp;SELECT P.NomProd, P.PrixUnit
+                        <br>&nbsp;&nbsp;FROM Produit AS P
+                        <br>&nbsp;&nbsp;WHERE EXISTS (SELECT * FROM Categorie C WHERE C.CodeCateg = P.CodeCateg AND C.NomCateg IN ("Desserts","Boissons"))
+                        <br>AND EXISTS (SELECT * FROM Fournisseur F WHERE F.NoFour = P.NoFour AND F.Pays = "Allemagne")
+                        <br>AND P.PrixUnit < 100
+                        <br>&nbsp;&nbsp;ORDER BY P.PrixUnit;
+                    </p>
+                    <ul class="result">
+                        <li>NuNuCa Nuß-Nougat-Creme à 11,67€</li>
+                        <li>Gumbär Gummibärchen à 26,03€</li>
+                        <li>Schoggi Schokolade à 36,58€</li>
+                        <li>Rhönbräu Klosterbier à 86,46€</li>
+                    </ul>
+                </article>
+                <article>
+                    <h2>Les fournisseurs qui vendent uniquement des boissons ou des desserts:</h2>
+                    <p class="sql">
+                        &nbsp;&nbsp;SELECT DISTINCT (F.NoFour), F.Societe
+                        <br>&nbsp;&nbsp;FROM Fournisseur AS F<br>&NOT EXISTS (SELECT 1 FROM Categorie C INNER JOIN Produit AS P ON C.CodeCateg = P.CodeCateg WHERE F.NoFour = P.NoFour AND C.NomCateg NOT IN ("Desserts","Boissons"))
+                        <br>&nbsp;&nbsp;ORDER BY F.Societe;
+                    </p>
+                    <p class="result">
+                        "Aux joyeux ecclésiastiques", "Faro Madeiras", "Globalis", H"eli Süßwaren GmbH & Co. KG", "Karkki Oy", "Losad", "Perdigão", "Refrescos Americanas LTDA", "Specialty Biscuits, Ltd.", "Westpac  Corporation" et "Zaanse Snoepfabriek".
+                    </p>
+                </article>
+            </section>
+            <section>
+                <h1>Les indicateurs sur les clients et les remises accordées</h1>
+                <article>
+                    <h2>Un client nantais Le verre à soi souhaite savoir quels autres clients nantais commandent aussi des produits en Allemagne:</h2>
+                    <p class="sql">
+                        &nbsp;&nbsp;SELECT Cli.CodeCli, Cli.SocieteCli
+                        <br>&nbsp;&nbsp;FROM Client AS Cli
+                        <br>&nbsp;&nbsp;WHERE Cli.VilleCli = "Nantes" AND Cli.SocieteCli <> "Verre à soi"
+                        <br>AND EXISTS (SELECT 1 FROM (((Fournisseur F INNER JOIN Produit P ON F.NoFour = P.NoFour) INNER JOIN DetailCommande D ON P.RefProd = D.RefProd) INNER JOIN Commande C ON D.NoCom = C.NoCom)
+                        <br>&nbsp;&nbsp;WHERE Cli.CodeCli = C.CodeCli AND F.Pays = "Allemagne")
+                        <br>&nbsp;&nbsp;ORDER BY Cli.SocieteCli;
+                    </p>
+                    <p class="result">"Pedro's house" et "Table nantaise"</p>
+                </article>
+                <article>
+                    <h2>Les clients n'ayant jamais eu  la remise la plus importante de 25%:</h2>
+                    <p class="sql">
+                        &nbsp;&nbsp;SELECT Cli.CodeCli, Cli.SocieteCli
+                        <br>&nbsp;&nbsp;FROM Client AS Cli
+                        <br>&nbsp;&nbsp;WHERE NOT EXISTS (SELECT 1 FROM DetailCommande D INNER JOIN Commande C ON D.NoCom = C.NoCom WHERE Cli.CodeCli = C.CodeCli AND D.Remise = 25)
+                        <br>&nbsp;&nbsp;ORDER BY Cli.SocieteCli;
+                    </p>
+                    <p class="result">
+                        "Le Nostradamus", "Bistro gare", "ChefFamilla", "Chez Bouxou", "Chez Kév", "ChopsTang", "Crêperie de la gare, "Délices d'Agen", "Food quartier", "La maison Chou", "La Maison dans le Parc", "La Table du Gourmet", L'Ancienne Auberge", "Le Bouffi", "Le clos bisontin", "Le marikou", "Le pain bis", "Le Pavillon des Boulevards", "Le Petit Hôtel du Grand Large", "Les Morainières", "Lille table", "Mendel table", "Pâtes à succès", "Pedro's house", "RestauToqué", "Riz de Caen", "Speedy plate", "Table nantaise", "Une petite faim" et "Verre à soi".
+                    </p>
+                </article>
+            </section>
+            <section>
+                <h1>Indicateurs personnels</h1>
+                <article>
+                    <h2>Indicateur de Tiago</h2>
+                    <p>Affiche les produits avec leurs pays d’origine à côter sans prendre en compte les produits français.</p>
+                    <p>
+                        De plus en plus de personnes veulent savoir d’où vienne les produits qu’ils consomment et donc afficher l’origine des produits créer une confiance entre le vendeur et le consommateur et pourra faire augmenter les ventes de chocolat pour KDou.
+                    </p>
+                    <p class="sql">
+                        &nbsp;&nbsp;SELECT P.RefProd, P.NomProd, F.Pays
+                        <br>&nbsp;&nbsp;FROM Produit AS P INNER JOIN Fournisseur AS F ON P.NoFour=F.NoFour
+                        <br>&nbsp;&nbsp;WHERE F.Pays <> "FRANCE"
+                        <br>&nbsp;&nbsp;ORDER BY F.Pays, P.NomProd;
+                    </p>
+                    <ol>
+                        <li>Sélectionne et affiche dans le résultat les colonnes "RefProd" de la table "Produit", "NomProd" de la table "Produit" et "Pays" de la table "Fournisseur"</li>
+                        <li>Relie les tables "Produit" et "Fournisseur" avec l'attribut "NoFour" </li>
+                        <li>Exclues tous les produits français afin qu’ils ne soient pas affichés dans le résultat</li>
+                        <li>Organise le résultat de façon que les pays soient rangés dans l’ordre croissant </li>
+                    </ol>
+                    <table class="result">
+                        <thead>
+                            <tr>
+                                <th>RefProd</th>
+                                <th>NomProd</th>
+                                <th>Pays</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>29</td>
+                                <td>Thüringer Rostbratwurst</td>
+                                <td>Allemagne</td>
+                            </tr>
+                            <tr>
+                                <td>25</td>
+                                <td>NuNuCa Nuß-Nougat-Creme</td>
+                                <td>Allemagne</td>
+                            </tr>
+                            <tr>
+                                <td>26</td>
+                                <td>Gumbär Gummibärchen</td>
+                                <td>Allemagne</td>
+                            </tr>
+                            <tr>
+                                <td>27</td>
+                                <td>Schoggi Schokolade</td>
+                                <td>Allemagne</td>
+                            </tr>
+                            <tr>
+                                <td>28</td>
+                                <td>Rössle Sauerkraut</td>
+                                <td>Allemagne</td>
+                            </tr>
+                            <tr>
+                                <td>64</td>
+                                <td>Wimmers gute Semmelknödel</td>
+                                <td>Allemagne</td>
+                            </tr>
+                            <tr>
+                                <td>75</td>
+                                <td>Rhönbräu Klosterbier</td>
+                                <td>Allemagne</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </article>
+                <article>
+                    <h2>Indicateur d'Ali:</h2>
+                    <p>
+                        Permet d’obtenir le nom des 5 clients ayant passés le plus de commandes. Avec cette donnée, l’entreprise KDou pourra identifier ce qui attire les clients les plus actifs à passer les commandes, et ainsi permettre de connaître les offres et services à améliorer ou conserver.
+                    </p>
+                    <p>
+                        L’intérêt principal de cette requête est qu’elle permet à l’entreprise d’améliorer l’offre qu’elle propose, tant du côté du marketing que du développement de produits. Cela va résulter notamment à fidéliser les clients en leur offrant le service le plus optimal en personnalisant les offres.
+                    </p>
+                    <p class="sql">
+                        &nbsp;&nbsp;SELECT TOP 5 C.CodeCli, C.SocieteCli, Count(Com.NoCom) AS NombreCommandes
+                        <br>&nbsp;&nbsp;FROM Client AS C INNER JOIN Commande AS Com ON C.CodeCli = Com.CodeCli
+                        <br>&nbsp;&nbsp;GROUP BY C.CodeCli, C.SocieteCli
+                        <br>&nbsp;&nbsp;ORDER BY 3 DESC;
+                    </p>
+                    <ol>
+                        <li>
+                            J’ajoute la clause top 5 afin de limiter le résultat aux cinq premiers clients. Je sélectionne ensuite le nom et le code de chaque client, et j’utilise la fonction count pour compter le nombre de commandes passées au total par chaque client.
+                        </li>
+                        <li>
+                            Je lie les tables « Client », qui contient les villes, et « Commande », qui contient les commandes, avec un LEFT JOIN qui permet de prendre en compte même les villes qui n’ont pas fait de commandes.
+                        </li>
+                        <li>
+                            Je joins la table client et la table commande afin de conserver uniquement les clients ayant déjà passé au moins une commande.
+                        </li>
+                        <li>
+                            Je regroupe les résultats par client avec leur code et leur société afin de calculer le nombre total de commande pour chaque client.
+                        </li>
+                        <li>
+                            Enfin, je trie le résultat par le nombre de commandes dans l’ordre décroissant afin de voir apparaitre en premier les clients avec le plus grand nombre de commandes.
+                        </li>
+                    </ol>
+                    <table class="result">
+                        <thead>
+                            <tr>
+                                <th>CodeCli</th>
+                                <th>SocieteCli</th>
+                                <th>NombreCommandes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>CHOPS</td>
+                                <td>ChopsTang</td>
+                                <td>60</td>
+                            </tr>
+                            <tr>
+                                <td>COMMI</td>
+                                <td>Pedro's house</td>
+                                <td>58</td>
+                            </tr>
+                            <tr>
+                                <td>FRANS</td>
+                                <td>Pâtes à succès</td>
+                                <td>58</td>
+                            </tr>
+                            <tr>
+                                <td>FOLKO</td>
+                                <td>RestauToqué</td>
+                                <td>55</td>
+                            </tr>
+                            <tr>
+                                <td>CONSH</td>
+                                <td>Lille table</td>
+                                <td>55</td>
+                            </tr>
+                            <tr>
+                                <td>DRACD</td>
+                                <td>Table nantaise</td>
+                                <td>55</td>
+                            </tr>
+                            <tr>
+                                <td>FRANK</td>
+                                <td>Le pain bis</td>
+                                <td>55</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </article>
+                <article>
+                    <h2>Indicateur de Tony:</h2>
+                    <p>Permet de connaître le nombre de commandes par ville pour ensuite pouvoir optimiser la logistique dans le territoire français.</p>
+                    <p class="sql">
+                        &nbsp;&nbsp;SELECT C.VilleCli, COUNT(Com.NoCom) AS NbCom
+                        <br>&nbsp;&nbsp;FROM Client C LEFT JOIN Commande Com ON C.CodeCli = Com.CodeCli
+                        <br>&nbsp;&nbsp;GROUP BY C.VilleCli
+                        <br>&nbsp;&nbsp;ORDER BY COUNT(C.CodeCli) DESC, C.VilleCli;
+                    </p>
+                    <ol>
+                        <li>
+                            Avec SELECT, j’affiche les villes et le nombre de commandes avec la fonction d’agrégation COUNT qui permet de compter le nombre de lignes dans une colonne.
+                        </li>
+                        <li>
+                            Je lie les tables « Client », qui contient les villes, et « Commande », qui contient les commandes, avec un LEFT JOIN qui permet de prendre en compte même les villes qui n’ont pas fait de commandes.
+                        </li>
+                        <li>
+                            Je regroupe le nombre de commandes par ville avec le GROUP BY.
+                        </li>
+                        <li>
+                            Finalement, je trie la table résultant par ordre décroissant du nombre de commandes par ville, puis par ordre croissant des villes.
+                        </li>
+                    </ol>
+                    <ul class="result">
+                        <li>Nantes: 141 commandes</li>
+                        <li>Lille: 133 commandes</li>
+                        <li>Paris: 115 commandes</li>
+                        <li>Agen: 83 commandes</li>
+                        <li>Caen: 67 commandes</li>
+                        <li>Marseille: 60 commandes</li>
+                        <li>Lyon et Reims: 55 commandes</li>
+                        <li>Versailles: 53 commandes</li>
+                        <li>Strasbourg: 50 commandes</li>
+                        <li>Versailles: 42 commandes</li>
+                        <li>Riquewihr: 40 commandes</li>
+                        <li>Jongieux: 39 commandes</li>
+                        <li>Besancon: 23 commandes</li>
+                        <li>Besançon: 22 commandes</li>
+                        <li>Locmariaquer: 20 commandes</li>
+                        <li>Bordeaux: 19 commandes</li>
+                        <li>Puy-l'Évêque: 18 commandes</li>
+                        <li>Bayeux et Nancy: 0 commande</li>
+                    </ul>
+                </article>
+            </section>
+        </main>
+        <footer>
+            <p>Page créée par Tony HONG</p>
+            <p>Rapport créé par le groupe Tony-Tiago-Clément-Ali</p>
+        </footer>
+    </body>
+</html>

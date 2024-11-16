@@ -1,0 +1,101 @@
+body {
+    font-family: "Arial", sans-serif;
+    background-color: #E6E1DC;
+    margin: 0;      /*Permet d'enlever un espacement en trop à gauche de la nav*/
+}
+nav {
+    display: flex;
+    justify-content: center;
+    background-color: cornflowerblue;
+    position: fixed;    /*La bar nav ne bouge pas au scroll*/
+    top: 0;             /*Fixe la bar nav sur le haut du navigateur*/
+    width: 100%;        /*Prend tout l'espace du dessus du navigateur*/
+    border-radius: 0 0 10px 10px;
+}
+nav h1 {
+    user-select: none;
+    color: aliceblue;
+    font-size: 1.1em;
+    margin-right: 4em;
+}
+label, #toggle {
+    display: none;
+}
+.menu a {
+    display: flex;
+    float: left; /*Garde la bar nav à l'horizontale*/
+    justify-content: center;
+    text-decoration: none;
+    color: aliceblue;
+    padding: 1em;
+    user-select: none;
+    transition: background-color 0.3s;
+}
+nav a:hover:not(.active) {  /*Change la couleur du lien lorsqu'il est survolé par le curseur sauf s'il s'agit du lien de la page active*/
+    background-color: darkslateblue;
+}
+.active {   /*La couleur du lien de la page active dans le nav est différente*/
+    background-color: deepskyblue;
+}
+header {
+    margin: 6em 0.4em 2em;  /*Le header n'est pas caché par la nav*/
+}
+header h1 {
+    text-align: center;
+}
+main{
+    margin: 0 1em 1em 1em;
+}
+main h1 {
+    text-decoration: underline;
+}
+h2 {
+    font-size: 1em;
+}
+p {
+    text-align: justify;
+}
+table {
+    border-collapse: collapse;
+}
+th, td {
+    border-left: 0.2em solid aliceblue;
+}
+.sql {
+    font-family: "Courier New", monospace;
+}
+.result {
+    background-color: #c2deff;
+}
+footer {
+    padding: 0.5em;
+    background-color: cornflowerblue;
+    color: aliceblue;
+    text-align: end;
+}
+footer p {
+    text-align: center;
+}
+/*Au dessus de 700px, c'est le css du dessus qui s'applique*/
+@media screen and (max-width: 700px) {
+    .menu {
+        display: none;
+        border-radius: 10px;
+    }
+    /*On fait apparaître le menu hamburger et on le place*/
+    label {
+        display: block;
+        padding: 0.1em 2em;
+        font-size: 2em;
+        color: white;   /*Agit sur la couleur du trigramme*/
+        cursor: pointer;
+    }
+    label:hover {
+        background-color: darkslateblue;
+    }
+
+    #toggle:checked +/*Sélecteur "+" pour cibler un voisin direct*/ .menu {
+        display: flex;
+        flex-direction: column;
+    }
+}

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Compte rendu mission 1</title>
+        <link rel="stylesheet" type="text/css" href="assets/styles/style1.css">
+    </head>
+    <body>
+        <!-- Barre de navigation -->
+        <nav class="navbar">
+            <div class="nav-title">
+                <h1>KDou</h1>
+            </div>
+            <label for="toggle">☰</label>
+            <input type="checkbox" id="toggle">
+            <ul>
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="mission1.html">Mission 1</a></li>
+                <li><a href="mission2.html">Mission 2</a></li>
+                <li><a href="mission3.html">Mission 3</a></li>
+                <li><a href="conclusion.html">Conclusion</a></li>
+            </ul>
+        </nav>
+
+        <section id="carrousel">
+            <div class="carousel">
+                <div class="carousel-images">
+                    <img src="images/image1.webp" alt="Image 1">
+                    <img src="images/image2.png" alt="Image 2">
+                    <img src="images/image3.jpg" alt="Image 3">
+                </div>
+            </div>
+        </section>
+
+        <header>
+            <section id="cles">
+                <h1>Rapport de la Mission 1</h1>
+            </section>
+            <p>
+                Pour cette mission, on nous a demandé d'identifier les clés primaires et étrangères de la base de données Access de KDou
+            </p>
+            <ol>
+                <li><a href="#cles">Clés Primaires et Étrangères</a></li>
+                <li><a href="#questions">Questions</a></li>
+                <li><a href="#problemes">Problèmes</a></li>
+                <li><a href="#ameliorations">Améliorations</a></li>
+            </ol>
+        </header>
+
+        <!-- Contenu Principal -->
+        <main class="content">
+
+            <section id="questions">
+                <h2>Clés Primaires et Étrangères</h2>
+                <h3>Clés Primaires</h3>
+                <ul>
+                    <li>Table Fournisseur = N° fournisseur</li>
+                    <li>Table Produit = Réf produit</li>
+                    <li>Table Catégorie = Code catégorie</li>
+                    <li>Table Clientèle = Code client</li>
+                    <li>Table Commande = N° commande</li>
+                    <li>Table DetailCommande = Réf produit + N° commande</li>
+                </ul>
+                <h3>Clés Étrangères</h3>
+                <ul>
+                    <li>Table Fournisseur = NULL</li>
+                    <li>Table Produit = N° fournisseur, Code catégorie</li>
+                    <li>Table Catégorie = NULL</li>
+                    <li>Table Clientèle = NULL</li>
+                    <li>Table Commande = Code client</li>
+                    <li>Table DetailCommande = NULL</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Questions et Réponses</h2>
+                <ul>
+                    <li>Il y a 3 clients nantais.</li>
+                    <li>Il y a 5 clients de régions parisiennes.</li>
+                    <li>L’adresse du fournisseur Marie Delamare est le 22 rue H. Voiron 71300 Montceau.</li>
+                    <li>Il y a 6 fournisseurs en Amérique du Nord.</li>
+                    <li>Il y a 10 pays dans l’UE autre que la France.</li>
+                    <li>La fonction du contact fournisseur « Ma maison » est « directeur du marketing ».</li>
+                    <li>La fonction de contact fournisseur la plus représentée est « représentant(e) ».</li>
+                    <li>Le client Mikal Pavbo a commandé les produits suivants :
+                        <ul>
+                            <li>Aniseed Syrup, Boissons, 9,17€</li>
+                            <li>Lakkalikööri, Boissons, 15€</li>
+                            <li>Boston Crab Meat, Poissons et fruits de mer, 15,33€</li>
+                            <li>NuNuCa Nuß-Nougat-Creme, Desserts, 11,67€</li>
+                            <li>Raclette Courdavault, Produits laitiers, 31,46€</li>
+                            <li>Wimmers gute Semmelknödel, Pâtes et céréales, 27,71€</li>
+                            <li>Outback Lager, Boissons, 12,50€</li>
+                            <li>Mozzarella di Giovanni, Produits laitiers, 29€</li>
+                            <li>Röd Kaviar, Poissons et fruits de mer, 12,50€</li>
+                            <li>Lakkalikööri, Boissons, 15€</li>
+                        </ul>
+                    </li>
+                    <li>Les dates des commandes du client MORJU sont :
+                        <ul>
+                            <li>03/12/2020</li>
+                            <li>06/12/2020</li>
+                            <li>27/12/2020</li>
+                            <li>17/01/2021</li>
+                            <li>20/02/2021</li>
+                            <li>07/03/2021</li>
+                            <li>11/03/2021</li>
+                            <li>24/03/2021</li>
+                            <li>24/04/2021</li>
+                            <li>16/06/2021</li>
+                            <li>30/06/2021</li>
+                        </ul>
+                    </li>
+                    <li>L’offre de produits suédois est :
+                        <ul>
+                            <li>Tunnbröd</li>
+                            <li>knäckebrod Kala</li>
+                            <li>Dea Surströmming</li>
+                            <li>Kanelbullar Stock</li>
+                            <li>Inlagd Sill</li>
+                            <li>Gravad lax</li>
+                            <li>Röd Kaviar</li>
+                        </ul>
+                    </li>
+                    <li>Les catégories de produits vendues par les fournisseurs singapouriens sont « Boissons » et « Condiments
+                        ».
+                    </li>
+                    <li>Les clients qui n’ont pas passé de commande sont :
+                        <ul>
+                            <li>Auberge de l'Île Barbe, Melvin Thiot</li>
+                            <li>L'Atelier des Augustins, Isra Dubois</li>
+                            <li>Le 7ème Continent, Abdel Duroc</li>
+                            <li>Riz de Caen, André Fonseca</li>
+                            <li>La Table du Gourmet, Mariciée Gilles</li>
+                            <li>Le Petit Hôtel du Grand Large, Martin Fos</li>
+                        </ul>
+                    </li>
+                    <li>Les produits sont conditionnés avec des emballages ?</li>
+                </ul>
+            </section>
+
+            <section id="problemes">
+                <h2>Problèmes Observés</h2>
+                <p>Dans les villes de la table Fournisseur, il y a « São Paulo » et « Sao Paulo », dans les pays de la même
+                    table, il y a « Etats-Unis » et « USA », il manque également un « (e) » à un des « Représentant(e) », il y a
+                    des espaces en trop à certains endroits et des majuscules qui manquent. Ces fautes d’orthographes/syntaxes
+                    peuvent gêner le triage et filtrage de cette table.</p>
+                <p>Dans les contacts de la table Fournisseur, il n’y a que cinq « directeur marketing » alors qu’il est sensé en
+                    avoir six, il manque aussi un « chef de ventes » et un « directeur marketing international ». Ces trous dans
+                    la table peuvent faire perdre beaucoup de temps.</p>
+            </section>
+
+            <section id="ameliorations">
+                <h2>Idées d’Amélioration</h2>
+                <ul>
+                    <li>Mettre en place des restrictions sur les noms pour éviter les doublons et fautes d’orthographes.</li>
+                    <li>Séparer davantage les données pour plus de lisibilité.</li>
+                    <li>Utiliser un logiciel SQL comme Access à la place d’Excel.</li>
+                </ul>
+            </section>
+        </main>
+        <!-- Pied de page -->
+        <footer>
+            <p>Rapport de la Mission 1 par Ali BEN AKREMI</p>
+            <p>Groupe : Tony HONG, Tiago PEREIRA DE BARROS, Clément CHABRILLANGES, Ali BEN AKREMI</p>
+        </footer>
+    </body>
+</html>
